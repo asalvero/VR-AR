@@ -1,4 +1,4 @@
-/ Get config from URL
+//Get config from URL
 var config = (function() {
   var config = {};
   var q = window.location.search.substring(1);
