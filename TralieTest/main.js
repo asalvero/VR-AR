@@ -54,7 +54,7 @@ const controls = new THREE.VRControls(camera);
 
 // Apply VR stereo rendering to renderer.
 var effect = new THREE.VREffect(renderer);
-effect.setSize(WIDTH, HEIGHT);
+effect.setSize(window.innerWidth, window.innerHeight);
 
 // Add a repeating grid as a skybox.
 var boxWidth = 5;
@@ -83,9 +83,9 @@ function onTextureLoaded(texture) {
 //Code from Tralie.html
 const geometry = new THREE.BoxGeometry(3,3,3);
             
-const loader = new THREE.TextureLoader(); //allows for images to be used
+//const loader = new THREE.TextureLoader(); //allows for images to be used
 const material = new THREE.MeshBasicMaterial({
-    map: loader.load('images/tralie.jpg'),
+    map: loader.load('../images/tralie.jpg'),
 })
             
 const cube = new THREE.Mesh( geometry, material );
@@ -101,8 +101,8 @@ camera.position.z = 5;
     scene.fog = new THREE.Fog(color, near, far);
     scene.background = new THREE.Color(color);
 }
-
-const animate = function () {
+var lastRender = 0;
+function animate(timestamp) {
     var delta = Math.min(timestamp - lastRender, 500);
     lastRender = timestamp;
 
@@ -122,8 +122,8 @@ const animate = function () {
 //animate();
 
 function onResize() {
-    effect.setSize(WIDTH, HEIGHT);
-    camera.aspect = WIDTH / HEIGHT;
+    effect.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
   }
   
