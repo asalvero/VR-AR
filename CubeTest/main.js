@@ -62,9 +62,9 @@ var config = (function() {
   effect.setSize(window.innerWidth, window.innerHeight);
   
   // Add a repeating grid as a skybox.
-  var boxWidth = 5;
-  var loader = new THREE.TextureLoader();
-  loader.load('img/box.png', onTextureLoaded);
+  //var boxWidth = 5;
+  //var loader = new THREE.TextureLoader();
+  //loader.load('img/box.png', onTextureLoaded);
   
   // Kick off the render loop.
   vrDisplay.requestAnimationFrame(animate);
