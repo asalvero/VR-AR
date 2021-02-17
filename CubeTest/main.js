@@ -68,7 +68,7 @@ var config = (function() {
   
   // Kick off the render loop.
   vrDisplay.requestAnimationFrame(animate);
-  
+  /*
   function onTextureLoaded(texture) {
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
@@ -84,6 +84,7 @@ var config = (function() {
     var skybox = new THREE.Mesh(geometry, material);
     scene.add(skybox);
   }
+*/
 
   //This adds the test.html 
     //const scene = new THREE.Scene();
