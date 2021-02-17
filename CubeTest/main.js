@@ -131,8 +131,8 @@ animate();
 //End of test.html
 
 function onResize() {
-    effect.setSize(WIDTH, HEIGHT);
-    camera.aspect = WIDTH / HEIGHT;
+    effect.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
   }
   
