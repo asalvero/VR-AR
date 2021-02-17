@@ -38,8 +38,8 @@ navigator.getVRDisplays = function () {
   });
 };
 
-var WIDTH = 400;
-var HEIGHT = 225;
+//var WIDTH = 400;
+//var HEIGHT = 225;
 var canvas = document.querySelector('canvas');
 // Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit.
 // Only enable it if you actually need to.
@@ -50,14 +50,16 @@ renderer.setPixelRatio(Math.floor(window.devicePixelRatio));
 var scene = new THREE.Scene();
 
 // Create a three.js camera.
-var camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 0.1, 10000);
+//var camera = new THREE.PerspectiveCamera(75, WIDTH / HEIGHT, 0.1, 10000);
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
 
 // Apply VR headset positional data to camera.
 var controls = new THREE.VRControls(camera);
 
 // Apply VR stereo rendering to renderer.
 var effect = new THREE.VREffect(renderer);
-effect.setSize(WIDTH, HEIGHT);
+//effect.setSize(WIDTH, HEIGHT);
+effect.setSize(window.innerWidth, window.innerHeight);
 
 // Add a repeating grid as a skybox.
 var boxWidth = 5;
@@ -114,8 +116,10 @@ function animate(timestamp) {
 }
 
 function onResize() {
-  effect.setSize(WIDTH, HEIGHT);
-  camera.aspect = WIDTH / HEIGHT;
+  //effect.setSize(WIDTH, HEIGHT);
+  //camera.aspect = WIDTH / HEIGHT;
+  effect.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 }
 
