@@ -43,7 +43,7 @@ navigator.getVRDisplays = function () {
 var canvas = document.querySelector('canvas');
 // Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit.
 // Only enable it if you actually need to.
-var renderer = new THREE.WebGLRenderer({antialias: false, canvas: canvas});
+var renderer = new THREE.WebGLRenderer({antialias: true, canvas: canvas});
 renderer.setPixelRatio(Math.floor(window.devicePixelRatio));
 
 // Create a three.js scene.
