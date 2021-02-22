@@ -76,6 +76,15 @@ var cube = new THREE.Mesh(geometry, material);
   scene.add(light);
 }
 
+// this adds fog
+{
+  const near = 2;
+  const far = 6;
+  const color = 'lightblue';
+  scene.fog = new THREE.Fog(color, near, far);
+  scene.background = new THREE.Color(color);
+}
+
 // Position cube mesh
 cube.position.z = -1;
 
