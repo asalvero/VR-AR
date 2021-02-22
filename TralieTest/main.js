@@ -95,6 +95,7 @@ function animate(timestamp) {
 
   // Apply rotation to cube mesh
   cube.rotation.y += delta * 0.0006;
+  cube.rotation.x += delta * 0.0006;
 
   // Update VR headset position and apply to camera.
   controls.update();
