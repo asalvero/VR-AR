@@ -78,7 +78,7 @@ var cube = new THREE.Mesh(geometry, material);
 
 // this adds fog
 {
-  const near = 2;
+  const near = 0;
   const far = 6;
   const color = 'lightblue';
   scene.fog = new THREE.Fog(color, near, far);
