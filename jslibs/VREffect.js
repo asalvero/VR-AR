@@ -7,6 +7,7 @@
  * Firefox: http://mozvr.com/downloads/
  * Chromium: https://webvr.info/get-chrome
  */
+var translation = 0;
 
 THREE.VREffect = function ( renderer, onError ) {
 
@@ -17,6 +18,8 @@ THREE.VREffect = function ( renderer, onError ) {
 	var headMatrix = new THREE.Matrix4();
 	var eyeMatrixL = new THREE.Matrix4();
 	var eyeMatrixR = new THREE.Matrix4();
+
+	
 
 	var frameData = null;
 
@@ -439,7 +442,10 @@ THREE.VREffect = function ( renderer, onError ) {
 			headMatrix.setPosition( posePosition );
 
 		}
-
+		console.log("translation = " + translation);
+		frameData.rightViewMatrix[12] -= translation;
+		translation -= 0.0003;
+		console.log(frameData.rightViewMatrix[12]);
 		// The view matrix transforms vertices from sitting space to eye space. As such, the view matrix can be thought of as a product of two matrices:
 		// headToEyeMatrix * sittingToHeadMatrix
 
