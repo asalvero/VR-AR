@@ -98,9 +98,15 @@ arToolkitContext = new THREEx.ArToolkitContext({
 });
 
 // copy projection matrix to camera when initialization complete
+<<<<<<< HEAD
 arToolkitContext.init( function onCompleted(){
     camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
 });
+=======
+arToolkitContext.init();// function onCompleted(){
+//    camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+//});
+>>>>>>> 54d6f4b99ada017b291efc6dafa1c95dc8f7c3a6
 
 // Adding the AR markerControls
 markerRoot1 = new THREE.Group();
@@ -108,11 +114,6 @@ scene.add(markerRoot1);
 let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
 	type: 'pattern', patternUrl: "data/hiro.patt",
 })
-
-mesh = new THREE.Mesh( geometry, material );
-mesh.position.y = 0.5;
-	
-markerRoot1.add( mesh );
 
 //this allows for phong to occur
 {
@@ -136,16 +137,28 @@ markerRoot1.add( mesh );
 cube.position.z = -1;
 
 // Add cube mesh to your three.js scene
-scene.add(cube);
+
+let mainGroup = new THREE.Group();
+mainGroup.add(cube);
+
+scene.add(mainGroup);
 
 // Request animation frame loop function
 var lastRender = 0;
 function animate(timestamp) {
+  if ( arToolkitSource.ready !== false ) {
+    arToolkitContext.update( arToolkitSource.domElement );
+    arToolkitSource.domElement.display = "none";
+  }
+
   var delta = Math.min(timestamp - lastRender, 500);
   lastRender = timestamp;
 
   // Apply rotation to cube mesh
-  cube.rotation.y += delta * 0.0006;
+  //cube.rotation.y += delta * 0.0006;
+  cube.position.x = -0.1*markerRoot1.position.x;
+  cube.position.y = 0.1*markerRoot1.position.y;
+  cube.position.z = -0.5+0.1*markerRoot1.position.z;
 
   // Update VR headset position and apply to camera.
   controls.update();
@@ -155,6 +168,8 @@ function animate(timestamp) {
 
   // Keep looping.
   vrDisplay.requestAnimationFrame(animate);
+  
+  //console.log(markerRoot1.position);
 }
 
 function onResize() {
