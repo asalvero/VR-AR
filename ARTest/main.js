@@ -138,16 +138,19 @@ var lastRender = 0;
 function animate(timestamp) {
   if ( arToolkitSource.ready !== false ) {
     arToolkitContext.update( arToolkitSource.domElement );
+    arToolkitSource.domElement.display = "none";
   }
 
   var delta = Math.min(timestamp - lastRender, 500);
   lastRender = timestamp;
 
   // Apply rotation to cube mesh
-  cube.rotation.y += delta * 0.0006;
+  //cube.rotation.y += delta * 0.0006;
+  cube.position.x = -0.1*markerRoot1.position.x;
+  cube.position.y = 0.1*markerRoot1.position.y;
+  cube.position.z = -0.5+0.1*markerRoot1.position.z;
 
   // Update VR headset position and apply to camera.
-  camera.position = markerRoot1.position;
   controls.update();
 
   // Render the scene.
