@@ -69,7 +69,7 @@ var cube = new THREE.Mesh(geometry, material);
 
 // Adding the AR markerControls
 markerRoot = new THREE.Group();
-scene.add(markerRoot1);
+scene.add(markerRoot);
 let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
 	type: 'pattern', patternUrl: "data/hiro.patt",
 })
