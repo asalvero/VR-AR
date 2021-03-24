@@ -67,9 +67,44 @@ var geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
 var material = new THREE.MeshPhongMaterial({ color: 0xCD853F });
 var cube = new THREE.Mesh(geometry, material);
 
+// create arToolkitSource
+arToolkitSource = new THREEx.ArToolkitSource({
+    sourceType : 'webcam',
+});
+
+function onResize()
+{
+    arToolkitSource.onResize()	
+    arToolkitSource.copySizeTo(renderer.domElement)	
+    if ( arToolkitContext.arController !== null )
+    {
+        arToolkitSource.copySizeTo(arToolkitContext.arController.canvas)	
+    }	
+}
+
+arToolkitSource.init(function onReady(){
+    onResize()
+});
+
+// handle resize event
+window.addEventListener('resize', function(){
+    onResize()
+});
+
+// create arToolkitContext
+arToolkitContext = new THREEx.ArToolkitContext({
+    cameraParametersUrl: 'data/camera_para.dat',
+    detectionMode: 'mono'
+});
+
+// copy projection matrix to camera when initialization complete
+arToolkitContext.init( function onCompleted(){
+    camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+});
+
 // Adding the AR markerControls
-markerRoot = new THREE.Group();
-scene.add(markerRoot);
+markerRoot1 = new THREE.Group();
+scene.add(markerRoot1);
 let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
 	type: 'pattern', patternUrl: "data/hiro.patt",
 })
@@ -77,7 +112,7 @@ let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1,
 mesh = new THREE.Mesh( geometry, material );
 mesh.position.y = 0.5;
 	
-markerRoot.add( mesh );
+markerRoot1.add( mesh );
 
 //this allows for phong to occur
 {
