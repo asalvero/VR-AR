@@ -131,7 +131,11 @@ let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1,
 cube.position.z = -1;
 
 // Add cube mesh to your three.js scene
-scene.add(cube);
+
+let mainGroup = new THREE.Group();
+mainGroup.add(cube);
+
+scene.add(mainGroup);
 
 // Request animation frame loop function
 var lastRender = 0;
