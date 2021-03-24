@@ -98,9 +98,9 @@ arToolkitContext = new THREEx.ArToolkitContext({
 });
 
 // copy projection matrix to camera when initialization complete
-//arToolkitContext.init( function onCompleted(){
-//    camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
-//});
+arToolkitContext.init( function onCompleted(){
+    camera.projectionMatrix.copy( arToolkitContext.getProjectionMatrix() );
+});
 
 // Adding the AR markerControls
 markerRoot1 = new THREE.Group();
