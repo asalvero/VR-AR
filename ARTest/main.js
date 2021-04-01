@@ -63,9 +63,11 @@ effect.setSize(window.innerWidth, window.innerHeight);
 vrDisplay.requestAnimationFrame(animate);
 
 // Create 3D objects.
-var geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+var cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5); // three.js line 29094
+var sphereGeometry = new THREE.SphereGeometry(5, 10, 10); //three.js line 29075
 var material = new THREE.MeshPhongMaterial({ color: 0xCD853F });
-var cube = new THREE.Mesh(geometry, material);
+var cube = new THREE.Mesh(cubeGeometry, material);
+var sphere = new THREE.Mesh(sphereGeometry, material);
 
 // create arToolkitSource
 arToolkitSource = new THREEx.ArToolkitSource({
@@ -128,12 +130,17 @@ let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1,
 }
 
 // Position cube mesh
-cube.position.z = -1;
+//cube.position.z = -1;
+//sphere.position.y = 1;
 
 // Add cube mesh to your three.js scene
 
+//scene.add(cube);
+//scene.add(sphere);
+
 let mainGroup = new THREE.Group();
 mainGroup.add(cube);
+mainGroup.add(sphere);
 
 scene.add(mainGroup);
 
@@ -153,6 +160,10 @@ function animate(timestamp) {
   cube.position.x = -0.1*markerRoot1.position.x;
   cube.position.y = 0.1*markerRoot1.position.y;
   cube.position.z = -0.5+0.1*markerRoot1.position.z;
+
+  sphere.position.x = -0.1*(markerRoot1.position.x + 1);
+  sphere.position.y = 0.1*markerRoot1.position.y;
+  sphere.position.z = -0.5+0.1*markerRoot1.position.z;
 
   // Update VR headset position and apply to camera.
   controls.update();
