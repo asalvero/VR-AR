@@ -64,9 +64,10 @@ vrDisplay.requestAnimationFrame(animate);
 
 // Create 3D objects.
 var cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5); // three.js line 29094
-var sphereGeometry = new THREE.SphereGeometry(5, 10, 10); //three.js line 29075
+var sphereGeometry = new THREE.SphereGeometry(0.25, 32, 32); //three.js line 29075
 var material = new THREE.MeshPhongMaterial({ color: 0xCD853F });
 var cube = new THREE.Mesh(cubeGeometry, material);
+var cube2 = new THREE.Mesh(cubeGeometry, material);
 var sphere = new THREE.Mesh(sphereGeometry, material);
 
 // create arToolkitSource
@@ -139,7 +140,10 @@ let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1,
 //scene.add(sphere);
 
 let mainGroup = new THREE.Group();
+cube2.position.x -= 0.7;
+sphere.position.y += 0.4
 mainGroup.add(cube);
+mainGroup.add(cube2);
 mainGroup.add(sphere);
 
 scene.add(mainGroup);
@@ -156,14 +160,15 @@ function animate(timestamp) {
   lastRender = timestamp;
 
   // Apply rotation to cube mesh
-  //cube.rotation.y += delta * 0.0006;
-  cube.position.x = -0.1*markerRoot1.position.x;
-  cube.position.y = 0.1*markerRoot1.position.y;
-  cube.position.z = -0.5+0.1*markerRoot1.position.z;
+  cube.rotation.y += delta * 0.0006;
 
-  sphere.position.x = -0.1*(markerRoot1.position.x + 1);
-  sphere.position.y = 0.1*markerRoot1.position.y;
-  sphere.position.z = -0.5+0.1*markerRoot1.position.z;
+  mainGroup.position.x = -0.1*markerRoot1.position.x;
+  mainGroup.position.y = 0.1*markerRoot1.position.y;
+  mainGroup.position.z = -0.5+0.1*markerRoot1.position.z;
+  mainGroup.rotation.x = -markerRoot1.rotation.x;
+  mainGroup.rotation.y = -markerRoot1.rotation.y;
+  mainGroup.rotation.z = -markerRoot1.rotation.z;
+  mainGroup.matrix = markerRoot1.matrix;
 
   // Update VR headset position and apply to camera.
   controls.update();
