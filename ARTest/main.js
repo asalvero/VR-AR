@@ -162,12 +162,12 @@ function animate(timestamp) {
   // Apply rotation to cube mesh
   cube.rotation.y += delta * 0.0006;
 
-  mainGroup.position.x = -0.1*markerRoot1.position.x;
+  mainGroup.position.x = 0.1*markerRoot1.position.x;
   mainGroup.position.y = 0.1*markerRoot1.position.y;
-  mainGroup.position.z = -0.5+0.1*markerRoot1.position.z;
-  mainGroup.rotation.x = -markerRoot1.rotation.x;
-  mainGroup.rotation.y = -markerRoot1.rotation.y;
-  mainGroup.rotation.z = -markerRoot1.rotation.z;
+  mainGroup.position.z = 0.1*markerRoot1.position.z;
+  mainGroup.rotation.x = markerRoot1.rotation.x;
+  mainGroup.rotation.y = markerRoot1.rotation.y;
+  mainGroup.rotation.z = markerRoot1.rotation.z;
   mainGroup.matrix = markerRoot1.matrix;
 
   // Update VR headset position and apply to camera.
