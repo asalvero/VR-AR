@@ -164,7 +164,7 @@ function animate(timestamp) {
 
   mainGroup.position.x = 0.1*markerRoot1.position.x;
   mainGroup.position.y = 0.1*markerRoot1.position.y;
-  mainGroup.position.z = 0.1*markerRoot1.position.z;
+  mainGroup.position.z = -0.1*markerRoot1.position.z;
   mainGroup.rotation.x = markerRoot1.rotation.x;
   mainGroup.rotation.y = markerRoot1.rotation.y;
   mainGroup.rotation.z = markerRoot1.rotation.z;
