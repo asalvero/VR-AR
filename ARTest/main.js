@@ -140,8 +140,12 @@ let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1,
 //scene.add(sphere);
 
 let mainGroup = new THREE.Group();
+cube.position.y -= 1;
 cube2.position.x -= 0.7;
-sphere.position.y += 0.4
+cube2.position.y -= 1;
+//sphere.position.y -= 0.4;
+sphere.position.z -= 0.75;
+sphere.position.y -= 1;
 mainGroup.add(cube);
 mainGroup.add(cube2);
 mainGroup.add(sphere);
