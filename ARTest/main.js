@@ -3,7 +3,7 @@ let walkspeed = 2.5;//How many meters per second
 let movelr = 0;//Moving left/right
 let movefb = 0;//Moving forward/backward
 let moveud = 0;//Moving up/down
-let keyboardDebugging = false;
+let keyboardDebugging = true;
 
 /**
  * React to a key being pressed
@@ -156,8 +156,8 @@ effect.setSize(window.innerWidth, window.innerHeight);
 vrDisplay.requestAnimationFrame(animate);
 
 // Create 3D objects.
-var cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5); // three.js line 29094
-var sphereGeometry = new THREE.SphereGeometry(0.25, 32, 32); //three.js line 29075
+var cubeGeometry = new THREE.BoxGeometry(5, 5, 5); // three.js line 29094
+var sphereGeometry = new THREE.SphereGeometry(4, 32, 32); //three.js line 29075
 var material = new THREE.MeshPhongMaterial({ color: 0xCD853F });
 var cube = new THREE.Mesh(cubeGeometry, material);
 var cube2 = new THREE.Mesh(cubeGeometry, material);
@@ -226,10 +226,13 @@ if (useFog) {
 
 
 cube.position.y -= 1;
-cube2.position.x -= 0.7;
+cube.position.z = -10;
+cube2.position.x = -5;
 cube2.position.y -= 1;
-sphere.position.z -= 0.75;
-sphere.position.y -= 1;
+cube2.position.z = -10;
+
+sphere.position.z = -10;
+sphere.position.y = 5;
 
 let sceneRoot = new THREE.Group();
 sceneRoot.add(cube);
