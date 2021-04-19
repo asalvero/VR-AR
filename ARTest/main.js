@@ -3,7 +3,7 @@ let walkspeed = 2.5;//How many meters per second
 let movelr = 0;//Moving left/right
 let movefb = 0;//Moving forward/backward
 let moveud = 0;//Moving up/down
-let keyboardDebugging = true;
+let keyboardDebugging = false;
 
 /**
  * React to a key being pressed
