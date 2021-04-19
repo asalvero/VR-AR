@@ -1,3 +1,96 @@
+let keysDown = {87:false, 83:false, 65:false, 68:false, 67:false, 69:false};
+let walkspeed = 2.5;//How many meters per second
+let movelr = 0;//Moving left/right
+let movefb = 0;//Moving forward/backward
+let moveud = 0;//Moving up/down
+let keyboardDebugging = false;
+
+/**
+ * React to a key being pressed
+ * @param {keyboard callback} evt 
+ */
+  function keyDown(evt) {
+  let newKeyDown = false;
+  if (evt.keyCode == 87) { //W
+      if (!keysDown[87]) {
+          newKeyDown = true;
+          keysDown[87] = true;
+          movefb = 1;
+      }
+  }
+  else if (evt.keyCode == 83) { //S
+      if (!keysDown[83]) {
+          newKeyDown = true;
+          keysDown[83] = true;
+          movefb = -1;
+      }
+  }
+  else if (evt.keyCode == 65) { //A
+      if (!keysDown[65]) {
+          newKeyDown = true;
+          keysDown[65] = true;
+          movelr = -1;
+      }
+  }
+  else if (evt.keyCode == 68) { //D
+      if (!keysDown[68]) {
+          newKeyDown = true;
+          keysDown[68] = true;
+          movelr = 1;
+      }
+  }
+  else if (evt.keyCode == 67) { //C
+      if (!keysDown[67]) {
+          newKeyDown = true;
+          keysDown[67] = true;
+          moveud = -1;
+      }
+  }
+  else if (evt.keyCode == 69) { //E
+      if (!keysDown[69]) {
+          newKeyDown = true;
+          keysDown[69] = true;
+          moveud = 1;
+      }
+  }
+}
+
+/**
+ * React to a key being released
+ * @param {keyboard callback} evt 
+ */
+function keyUp(evt) {
+  if (evt.keyCode == 87) { //W
+      movefb = 0;
+      keysDown[87] = false;
+  }
+  else if (evt.keyCode == 83) { //S
+      movefb = 0;
+      keysDown[83] = false;
+  }
+  else if (evt.keyCode == 65) { //A
+      movelr = 0;
+      keysDown[65] = false;
+  }
+  else if (evt.keyCode == 68) { //D
+      movelr = 0;
+      keysDown[68] = false;
+  }
+  else if (evt.keyCode == 67) { //C
+      moveud = 0;
+      keysDown[67] = false;
+  }
+  else if (evt.keyCode == 69) { //E
+      moveud = 0;
+      keysDown[69] = false;
+  }
+}    
+
+
+document.addEventListener('keydown', keyDown.bind(this), true);
+document.addEventListener('keyup', keyUp.bind(this), true);
+
+
 // Get config from URL
 var config = (function() {
   var config = {};
@@ -122,35 +215,33 @@ let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1,
 }
 
 // this adds fog
-{
-  const near = 0;
-  const far = 2;
-  const color = 'lightblue';
-  scene.fog = new THREE.Fog(color, near, far);
-  scene.background = new THREE.Color(color);
+let useFog = false;
+if (useFog) {
+    const near = 0;
+    const far = 2;
+    const color = 'lightblue';
+    scene.fog = new THREE.Fog(color, near, far);
+    scene.background = new THREE.Color(color);
 }
 
-// Position cube mesh
-//cube.position.z = -1;
-//sphere.position.y = 1;
 
-// Add cube mesh to your three.js scene
-
-//scene.add(cube);
-//scene.add(sphere);
-
-let mainGroup = new THREE.Group();
 cube.position.y -= 1;
 cube2.position.x -= 0.7;
 cube2.position.y -= 1;
-//sphere.position.y -= 0.4;
 sphere.position.z -= 0.75;
 sphere.position.y -= 1;
-mainGroup.add(cube);
-mainGroup.add(cube2);
-mainGroup.add(sphere);
 
-scene.add(mainGroup);
+let sceneRoot = new THREE.Group();
+sceneRoot.add(cube);
+sceneRoot.add(cube2);
+sceneRoot.add(sphere);
+sceneRoot.position.z = -4;
+sceneRoot.position.x = -0.3;
+sceneRoot.position.y = 0.5;
+
+let arGroup = new THREE.Group();
+arGroup.add(sceneRoot);
+scene.add(arGroup);
 
 // Request animation frame loop function
 var lastRender = 0;
@@ -166,13 +257,25 @@ function animate(timestamp) {
   // Apply rotation to cube mesh
   cube.rotation.y += delta * 0.0006;
 
-  mainGroup.position.x = 0.1*markerRoot1.position.x;
-  mainGroup.position.y = 0.1*markerRoot1.position.y;
-  mainGroup.position.z = -0.1*markerRoot1.position.z;
-  mainGroup.rotation.x = markerRoot1.rotation.x;
-  mainGroup.rotation.y = markerRoot1.rotation.y;
-  mainGroup.rotation.z = markerRoot1.rotation.z;
-  mainGroup.matrix = markerRoot1.matrix;
+  if (keyboardDebugging) {
+    if (movelr != 0 || moveud != 0 || movefb != 0) {
+        arGroup.position.x -= movelr*walkspeed*delta/1000;
+        arGroup.position.y -= moveud*walkspeed*delta/1000;
+        arGroup.position.z += movefb*walkspeed*delta/1000;
+        console.log(arGroup.position);
+    }
+  }
+  else {
+    arGroup.position.x = markerRoot1.position.x;
+    arGroup.position.y = markerRoot1.position.y;
+    arGroup.position.z = markerRoot1.position.z;
+    //arGroup.rotation.x = markerRoot1.rotation.x;
+    //arGroup.rotation.y = markerRoot1.rotation.y;
+    //arGroup.rotation.z = markerRoot1.rotation.z;
+  }
+
+
+
 
   // Update VR headset position and apply to camera.
   controls.update();
