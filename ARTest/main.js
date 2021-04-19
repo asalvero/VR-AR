@@ -205,6 +205,12 @@ let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1,
 	type: 'pattern', patternUrl: "data/hiro.patt",
 })
 
+markerRoot2 = new THREE.Group();
+scene.add(markerRoot2);
+let markerControls2 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot2, {
+	type: 'pattern', patternUrl: "data/kanji.patt",
+})
+
 //this allows for phong to occur
 {
   const color = 0xFFFFFF;
@@ -269,9 +275,10 @@ function animate(timestamp) {
     }
   }
   else {
-    arGroup.position.x = markerRoot1.position.x;
-    arGroup.position.y = markerRoot1.position.y;
-    arGroup.position.z = markerRoot1.position.z;
+    arGroup.position.x = 0.5*(markerRoot1.position.x + markerRoot2.position.x);
+    arGroup.position.y = 0.5*(markerRoot1.position.y + markerRoot2.position.y);
+    arGroup.position.z = 0.5*(markerRoot1.position.z + markerRoot2.position.z);
+
     //arGroup.rotation.x = markerRoot1.rotation.x;
     //arGroup.rotation.y = markerRoot1.rotation.y;
     //arGroup.rotation.z = markerRoot1.rotation.z;
