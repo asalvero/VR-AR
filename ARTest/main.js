@@ -235,7 +235,7 @@ let sceneRoot = new THREE.Group();
 sceneRoot.add(cube);
 sceneRoot.add(cube2);
 sceneRoot.add(sphere);
-sceneRoot.position.z = -4;
+sceneRoot.position.z = -1;
 sceneRoot.position.x = -0.3;
 sceneRoot.position.y = 0.5;
 
