@@ -199,17 +199,15 @@ arToolkitContext.init();// function onCompleted(){
 //});
 
 // Adding the AR markerControls
-markerRoot1 = new THREE.Group();
-scene.add(markerRoot1);
-let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
-	type: 'pattern', patternUrl: "data/hiro.patt",
-})
-
-markerRoot2 = new THREE.Group();
-scene.add(markerRoot2);
-let markerControls2 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot2, {
-	type: 'pattern', patternUrl: "data/kanji.patt",
-})
+const patterns = ["data/hiro.patt", "data/kanji.patt"];
+let markerRoots = [];
+for (let i = 0; i < patterns.length; i++) {
+  const markerRoot = new THREE.Group();
+  scene.add(markerRoot);
+  const markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
+    type: 'pattern', patternUrl: patterns[i],
+  });
+}
 
 //this allows for phong to occur
 {
@@ -275,9 +273,18 @@ function animate(timestamp) {
     }
   }
   else {
-    arGroup.position.x = 0.5*(markerRoot1.position.x + markerRoot2.position.x);
-    arGroup.position.y = 0.5*(markerRoot1.position.y + markerRoot2.position.y);
-    arGroup.position.z = 0.5*(markerRoot1.position.z + markerRoot2.position.z);
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    for (let i = 0; i < markerRoots.length; i++) {
+      x += markerRoots[i].position.x;
+      y += markerRoots[i].position.y;
+      z += markerRoots[i].position.z;
+    }
+    console.log(x + ", " + y + ", " + z);
+    arGroup.position.x = x/markerRoots.length;
+    arGroup.position.y = y/markerRoots.length;
+    arGroup.position.z = z/markerRoots.length;
 
     //arGroup.rotation.x = markerRoot1.rotation.x;
     //arGroup.rotation.y = markerRoot1.rotation.y;
