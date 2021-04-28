@@ -201,12 +201,22 @@ arToolkitContext.init();// function onCompleted(){
 // Adding the AR markerControls
 const patterns = ["data/hiro.patt", "data/kanji.patt"];
 let markerRoots = [];
+let markersVisible = [];
 for (let i = 0; i < patterns.length; i++) {
   const markerRoot = new THREE.Group();
   scene.add(markerRoot);
-  const markerControls = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
+  markerRoots.push(markerRoot);
+  const markerControl = new THREEx.ArMarkerControls(arToolkitContext, markerRoot, {
     type: 'pattern', patternUrl: patterns[i],
   });
+  markerControl.i = i;
+  markerControl.addEventListener("markerFound", (e)=>{
+    markersVisible[e.target.i] = true;
+  });
+  /*markerControl.addEventListener("markerLost", (e)=>{
+    markersVisible[e.target.i] = false;
+  });*/
+  markersVisible.push(false);
 }
 
 //this allows for phong to occur
@@ -252,7 +262,9 @@ scene.add(arGroup);
 
 // Request animation frame loop function
 var lastRender = 0;
+let frameNum = 0;
 function animate(timestamp) {
+  frameNum += 1;
   if ( arToolkitSource.ready !== false ) {
     arToolkitContext.update( arToolkitSource.domElement );
     arToolkitSource.domElement.display = "none";
@@ -276,15 +288,27 @@ function animate(timestamp) {
     let x = 0;
     let y = 0;
     let z = 0;
+    let count = 0;
+    // Average the positions of the visible markers
     for (let i = 0; i < markerRoots.length; i++) {
-      x += markerRoots[i].position.x;
-      y += markerRoots[i].position.y;
-      z += markerRoots[i].position.z;
+      if (markersVisible[i]) {
+        x += markerRoots[i].position.x;
+        y += markerRoots[i].position.y;
+        z += markerRoots[i].position.z;
+        count += 1;
+      }
+      markersVisible[i] = false;
     }
-    console.log(x + ", " + y + ", " + z);
-    arGroup.position.x = x/markerRoots.length;
-    arGroup.position.y = y/markerRoots.length;
-    arGroup.position.z = z/markerRoots.length;
+    if (count > 0) {
+      console.log("Averaging " + count + " markers");
+      arGroup.position.x = x/count;
+      arGroup.position.y = y/count;
+      arGroup.position.z = z/count;
+    }
+    else {
+      console.log("No markers found");
+    }
+
 
     //arGroup.rotation.x = markerRoot1.rotation.x;
     //arGroup.rotation.y = markerRoot1.rotation.y;
