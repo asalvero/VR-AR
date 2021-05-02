@@ -199,7 +199,7 @@ arToolkitContext.init();// function onCompleted(){
 //});
 
 // Adding the AR markerControls
-const patterns = ["data/hiro.patt", "data/kanji.patt", "letterA.patt", "letterB.patt", "letterC.patt", "letterD.patt", "letterF.patt", "letterG.patt"];
+const patterns = ["data/hiro.patt", "data/kanji.patt", "data/letterA.patt", "data/letterB.patt", "data/letterC.patt", "data/letterD.patt", "data/letterF.patt", "data/letterG.patt"];
 let markerRoots = [];
 let markersVisible = [];
 for (let i = 0; i < patterns.length; i++) {
