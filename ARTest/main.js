@@ -323,7 +323,7 @@ function animate(timestamp) {
 
 
   // Update VR headset position and apply to camera.
-  controls.update();
+  //controls.update();
 
   // Render the scene.
   effect.render(scene, camera);
