@@ -313,6 +313,10 @@ function animate(timestamp) {
     //arGroup.rotation.x = markerRoot1.rotation.x;
     //arGroup.rotation.y = markerRoot1.rotation.y;
     //arGroup.rotation.z = markerRoot1.rotation.z;
+
+    arGroup.rotation.x = 0;
+    arGroup.rotation.y = 0;
+    arGroup.rotation.z = 0;
   }
 
 
